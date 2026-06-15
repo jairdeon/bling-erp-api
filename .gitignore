@@ -127,3 +127,6 @@ vendor/
 
 # PHP testing
 .phpunit.cache/
+
+# macOS
+.DS_Store

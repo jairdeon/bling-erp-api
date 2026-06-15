@@ -198,4 +198,27 @@ class Produtos extends BaseEntity
 
         return UpdateResponse::fromResponse($response);
     }
+
+    /**
+     * Altera parcialmente um produto. Somente os campos informados terão o valor alterado.
+     *
+     * @param int $idProduto ID do produto
+     * @param array $body Corpo da requisição
+     *
+     * @return UpdateResponse
+     * @throws BlingApiException|BlingInternalException
+     *
+     * @see https://developer.bling.com.br/referencia#/Produtos/patch_produtos__idProduto_
+     */
+    public function updatePartial(int $idProduto, array $body): UpdateResponse
+    {
+        $response = $this->repository->update(
+            new RequestOptions(
+                endpoint: "produtos/$idProduto",
+                body: $body
+            )
+        );
+
+        return UpdateResponse::fromResponse($response);
+    }
 }

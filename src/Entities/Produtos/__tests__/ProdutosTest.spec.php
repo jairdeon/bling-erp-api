@@ -317,4 +317,32 @@ class ProdutosTest extends TestCase
         $this->assertInstanceOf(UpdateResponse::class, $response);
         $this->assertEquals($updateResponse, $response->toArray());
     }
+
+    /**
+     * Testa a atualização parcial.
+     *
+     * @return void
+     */
+    public function testShouldUpdatePartialSuccessfully(): void
+    {
+        $idProduto = fake()->randomNumber();
+        $updatePartialBody = json_decode(file_get_contents(__DIR__ . '/update-partial/request.json'), true);
+        $updateResponse = json_decode(file_get_contents(__DIR__ . '/update/response.json'), true);
+        $repository = $this->getMockBuilder(IBlingRepository::class)->getMock();
+        $repository->expects($this->once())
+            ->method('update')
+            ->with(
+                $this->callback(
+                    fn (RequestOptions $requestOptions) =>
+                    $requestOptions->endpoint === "produtos/$idProduto"
+                )
+            )
+            ->willReturn($this->buildResponse(status: 200, body: $this->buildBody($updateResponse)));
+
+        /** @var IBlingRepository $repository */
+        $response = $this->getInstance($repository)->updatePartial($idProduto, $updatePartialBody);
+
+        $this->assertInstanceOf(UpdateResponse::class, $response);
+        $this->assertEquals($updateResponse, $response->toArray());
+    }
 }
