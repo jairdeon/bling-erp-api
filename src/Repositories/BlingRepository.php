@@ -28,7 +28,10 @@ class BlingRepository implements IBlingRepository
   public function __construct(string $baseUrl, string $accessToken)
   {
     $this->baseHeaders = ['Authorization' => "Bearer $accessToken"];
-    $this->client = new Client(['base_uri' => $baseUrl]);
+    // http_errors desabilitado: respostas 4xx/5xx retornam normalmente para que
+    // o ResponseOptions construa e lance a BlingApiException com o ErrorResponse
+    // estruturado, em vez de o Guzzle lançar uma ClientException com mensagem truncada.
+    $this->client = new Client(['base_uri' => $baseUrl, 'http_errors' => false]);
   }
 
   /**

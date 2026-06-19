@@ -118,6 +118,12 @@ readonly abstract class BaseResponseObject implements IResponseObject
             );
         }
 
+        // Chave presente, porém com valor nulo: respeita propriedades anuláveis
+        // (ex.: "variations": null na resposta de criação de produto).
+        if (is_null($attributes[$propName]) && $allowsNull) {
+            return null;
+        }
+
         if (in_array($propTypeName, ['int', 'string', 'bool', 'float'])) {
             // Primitivo
             return $attributes[$propName];
