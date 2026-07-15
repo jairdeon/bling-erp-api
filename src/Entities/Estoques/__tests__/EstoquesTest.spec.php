@@ -71,6 +71,7 @@ class EstoquesTest extends TestCase
     public function testShouldGetBalancesSuccessfully(): void
     {
         $idsProdutos = [fake()->randomNumber(), fake()->randomNumber()];
+        $codigos = [(string) fake()->randomNumber(), (string) fake()->randomNumber()];
         $getBalancesResponse = json_decode(file_get_contents(__DIR__ . '/get-balances/response.json'), true);
         $repository = $this->getMockBuilder(IBlingRepository::class)->getMock();
         $repository->expects($this->once())
@@ -80,13 +81,15 @@ class EstoquesTest extends TestCase
                     fn(RequestOptions $requestOptions) =>
                     $requestOptions->endpoint === "estoques/saldos"
                     && $requestOptions->queryParams->content['idsProdutos'] === $idsProdutos
+                    && $requestOptions->queryParams->content['codigos'] === $codigos
                 )
             )
             ->willReturn($this->buildResponse(status: 200, body: $this->buildBody($getBalancesResponse)));
 
         /** @var IBlingRepository $repository */
         $response = $this->getInstance($repository)->getBalances(
-            idsProdutos: $idsProdutos
+            idsProdutos: $idsProdutos,
+            codigos: $codigos
         );
 
         $this->assertInstanceOf(GetBalancesResponse::class, $response);

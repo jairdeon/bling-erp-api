@@ -48,20 +48,27 @@ class Estoques extends BaseEntity
     /**
      * Obtém o saldo em estoque de produtos.
      *
-     * @param int[] $idsProdutos IDs dos produtos
-     * @param ?string $codigo Código do produto
-     * 
+     * Aceita filtrar por IDs de produtos e/ou por códigos de produtos. Ambos os
+     * parâmetros são enviados como _arrays_ na _query string_ (`idsProdutos[]`,
+     * `codigos[]`), conforme a documentação do endpoint. Ao menos um deve ser
+     * informado.
+     *
+     * @param ?int[] $idsProdutos IDs dos produtos
+     * @param ?string[] $codigos Códigos dos produtos
+     *
      * @return GetBalancesResponse
      * @throws BlingApiException|BlingInternalException
      *
      * @see https://developer.bling.com.br/referencia#/Estoques/get_estoques_saldos
      */
-    public function getBalances(array $idsProdutos, ?string $codigo = null): GetBalancesResponse
-    {
+    public function getBalances(
+        ?array $idsProdutos = null,
+        ?array $codigos = null
+    ): GetBalancesResponse {
         $response = $this->repository->index(
             new RequestOptions(
                 endpoint: "estoques/saldos",
-                queryParams: ['idsProdutos' => $idsProdutos, 'codigo' => $codigo]
+                queryParams: ['idsProdutos' => $idsProdutos, 'codigos' => $codigos]
             )
         );
 
