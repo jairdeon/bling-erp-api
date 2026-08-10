@@ -20,14 +20,14 @@ class Estoques extends BaseEntity
 {
     /**
      * Obtém o saldo em estoque de produtos por depósito.
-     * 
+     *
      * @param int $idDeposito ID do depósito
      * @param ?int[] $idsProdutos IDs dos produtos
      * @param ?string[] $codigos Códigos dos produtos
-     * 
+     *
      * @return FindBalanceResponse
      * @throws BlingApiException|BlingInternalException
-     * 
+     *
      * @see https://developer.bling.com.br/referencia#/Estoques/get_estoques_saldos__idDeposito_
      */
     public function findBalance(
@@ -77,12 +77,12 @@ class Estoques extends BaseEntity
 
     /**
      * Cria um registro de estoque.
-     * 
+     *
      * @param array $body Corpo da requisição
-     * 
+     *
      * @return CreateResponse
      * @throws BlingApiException|BlingInternalException
-     * 
+     *
      * @see https://developer.bling.com.br/referencia#/Estoques/post_estoques
      */
     public function create(array $body): CreateResponse
@@ -99,13 +99,13 @@ class Estoques extends BaseEntity
 
     /**
      * Altera um registro de estoque.
-     * 
+     *
      * @param int $idEstoque ID do estoque
      * @param array $body Corpo da requisição
-     * 
+     *
      * @return null
      * @throws BlingApiException|BlingInternalException
-     * 
+     *
      * @see https://developer.bling.com.br/referencia#/Estoques/put_estoques__idEstoque_
      */
     public function update(int $idEstoque, array $body): null
