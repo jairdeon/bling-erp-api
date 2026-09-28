@@ -364,7 +364,27 @@ class PedidosVendasTest extends TestCase
         $response = $this->getInstance($repository)->generateNfe($idPedidoVenda);
 
         $this->assertInstanceOf(GenerateNfeResponse::class, $response);
-        $this->assertEquals($generateNfeResponse, $response->toArray());
+        $this->assertEquals($generateNfeResponse['data'], $response->toArray());
+    }
+
+    /**
+     * Testa a geração de NF-e com a resposta no formato do OpenAPI (sem `data`).
+     *
+     * @return void
+     */
+    public function testShouldGenerateNfeWithoutDataEnvelope(): void
+    {
+        $idPedidoVenda = fake()->randomNumber();
+        $generateNfeResponse = ['idNotaFiscal' => 12345678];
+        $repository = $this->getMockBuilder(IBlingRepository::class)->getMock();
+        $repository->expects($this->once())
+            ->method('store')
+            ->willReturn($this->buildResponse(status: 201, body: $this->buildBody($generateNfeResponse)));
+
+        /** @var IBlingRepository $repository */
+        $response = $this->getInstance($repository)->generateNfe($idPedidoVenda);
+
+        $this->assertSame(12345678, $response->idNotaFiscal);
     }
 
     /**
@@ -391,7 +411,27 @@ class PedidosVendasTest extends TestCase
         $response = $this->getInstance($repository)->generateNfce($idPedidoVenda);
 
         $this->assertInstanceOf(GenerateNfceResponse::class, $response);
-        $this->assertEquals($generateNfceResponse, $response->toArray());
+        $this->assertEquals($generateNfceResponse['data'], $response->toArray());
+    }
+
+    /**
+     * Testa a geração de NFC-e com a resposta no formato do OpenAPI (sem `data`).
+     *
+     * @return void
+     */
+    public function testShouldGenerateNfceWithoutDataEnvelope(): void
+    {
+        $idPedidoVenda = fake()->randomNumber();
+        $generateNfceResponse = ['idNotaFiscal' => 12345678];
+        $repository = $this->getMockBuilder(IBlingRepository::class)->getMock();
+        $repository->expects($this->once())
+            ->method('store')
+            ->willReturn($this->buildResponse(status: 201, body: $this->buildBody($generateNfceResponse)));
+
+        /** @var IBlingRepository $repository */
+        $response = $this->getInstance($repository)->generateNfce($idPedidoVenda);
+
+        $this->assertSame(12345678, $response->idNotaFiscal);
     }
 
     /**

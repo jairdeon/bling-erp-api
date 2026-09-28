@@ -23,6 +23,9 @@ readonly final class GenerateNfeResponse extends BaseResponseRootObject
 
     /**
      * @inheritDoc
+     *
+     * A API devolve o id dentro de `data` (`{"data": {"idNotaFiscal": 123}}`), diferente do
+     * OpenAPI oficial (`{"idNotaFiscal": 123}`). Os dois formatos são aceitos.
      */
     public static function fromResponse(ResponseOptions $response): static
     {
@@ -30,6 +33,12 @@ readonly final class GenerateNfeResponse extends BaseResponseRootObject
             static::throwForInconsistentResponseOptions($response);
         }
 
-        return self::from($response->body->content);
+        $content = $response->body->content;
+
+        if (is_array($content['data'] ?? null)) {
+            $content = $content['data'];
+        }
+
+        return self::from($content);
     }
 }

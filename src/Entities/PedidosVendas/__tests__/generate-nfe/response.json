@@ -1,3 +1,5 @@
 {
-    "idNotaFiscal": 12345678
+    "data": {
+        "idNotaFiscal": 12345678
+    }
 }
