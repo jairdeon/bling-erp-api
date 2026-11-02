@@ -21,6 +21,7 @@ readonly final class GetResponseData extends BaseResponseObject
      * @param GetResponseDataContato $contato
      * @param ?Id $naturezaOperacao
      * @param ?Id $loja
+     * @param ?string $chaveAcesso
      */
     public function __construct(
         public ?int $id,
@@ -32,6 +33,7 @@ readonly final class GetResponseData extends BaseResponseObject
         public GetResponseDataContato $contato,
         public ?Id $naturezaOperacao,
         public ?Id $loja,
+        public ?string $chaveAcesso,
     ) {
     }
 }

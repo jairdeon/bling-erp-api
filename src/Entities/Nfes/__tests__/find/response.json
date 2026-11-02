@@ -62,6 +62,46 @@
         },
         "vendedor": {
             "id": 12345679
-        }
+        },
+        "valorFrete": 0,
+        "itens": [
+            {
+                "codigo": "PROD-001",
+                "descricao": "Produto de teste",
+                "unidade": "UN",
+                "quantidade": 10,
+                "valor": 5.5,
+                "valorTotal": 55,
+                "tipo": "P",
+                "gtin": "",
+                "cfop": "5102",
+                "classificacaoFiscal": "0000.00.00",
+                "cest": "",
+                "origem": 0,
+                "numeroPedidoCompra": "PC-001",
+                "informacoesAdicionais": "",
+                "impostos": {
+                    "valorAproximadoTotalTributos": 0,
+                    "icms": {
+                        "st": 0,
+                        "origem": 0,
+                        "modalidade": 3,
+                        "aliquota": 18,
+                        "valor": 9.9
+                    }
+                }
+            }
+        ],
+        "parcelas": [
+            {
+                "data": "2023-01-12",
+                "valor": 55,
+                "observacoes": "",
+                "caut": "",
+                "formaPagamento": {
+                    "id": 12345678
+                }
+            }
+        ]
     }
 }

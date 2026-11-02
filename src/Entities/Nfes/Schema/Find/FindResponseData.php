@@ -30,6 +30,9 @@ readonly final class FindResponseData extends BaseResponseObject
      * @param ?string $numeroPedidoLoja
      * @param ?FindResponseDataTransporte $transporte
      * @param ?Id $vendedor
+     * @param ?float $valorFrete
+     * @param ?FindResponseDataItens[] $itens
+     * @param ?FindResponseDataParcelas[] $parcelas
      */
     public function __construct(
         public ?int $id,
@@ -50,5 +53,19 @@ readonly final class FindResponseData extends BaseResponseObject
         public ?string $numeroPedidoLoja,
         public ?FindResponseDataTransporte $transporte,
         public ?Id $vendedor,
+        public ?float $valorFrete,
+        public ?array $itens,
+        public ?array $parcelas,
     ) {}
+
+    /**
+     * @inheritDoc
+     */
+    protected static function fromRules(): array
+    {
+        return [
+            'itens' => FindResponseDataItens::class,
+            'parcelas' => FindResponseDataParcelas::class,
+        ];
+    }
 }
