@@ -45,7 +45,9 @@ use AleBatistella\BlingErpApi\Entities\SituacoesModulos\SituacoesModulos;
 use AleBatistella\BlingErpApi\Entities\SituacoesTransicoes\SituacoesTransicoes;
 use AleBatistella\BlingErpApi\Entities\Usuarios\Usuarios;
 use AleBatistella\BlingErpApi\Entities\Vendedores\Vendedores;
+use AleBatistella\BlingErpApi\Entities\Shared\DTO\Request\ResponseOptions;
 use AleBatistella\BlingErpApi\Exceptions\BlingInternalException;
+use AleBatistella\BlingErpApi\Repositories\IBlingRepository;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -75,6 +77,21 @@ class BlingTest extends TestCase
     $actual = $this->getInstance();
 
     $this->assertInstanceOf($expected, $actual);
+  }
+
+  /**
+   * Testa que o repositório informado no construtor é o usado pelas entidades.
+   *
+   * @return void
+   */
+  public function testShouldUseInjectedRepository(): void
+  {
+    $repository = $this->createMock(IBlingRepository::class);
+    $repository->expects($this->once())
+      ->method('destroy')
+      ->willReturn(new ResponseOptions(endpoint: 'produtos/1', method: 'DELETE', status: 204));
+
+    (new Bling(fake()->word(), $repository))->produtos->delete(1);
   }
 
   /**

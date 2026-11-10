@@ -107,10 +107,12 @@ class Bling
    * Constrói o objeto.
    *
    * @param string $accessToken
+   * @param ?IBlingRepository $repository Repositório a usar no lugar do padrão (ex.: um decorador
+   *                                      com retentativa ou limite de requisições).
    */
-  public function __construct(string $accessToken)
+  public function __construct(string $accessToken, ?IBlingRepository $repository = null)
   {
-    $this->repository = IoC::getRepository($accessToken);
+    $this->repository = $repository ?? IoC::getRepository($accessToken);
     $this->modules = [];
   }
 
